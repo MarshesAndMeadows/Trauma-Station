@@ -99,7 +99,6 @@
     tags:
     - Write
     - WriteIgnoreStamps
-    - Pickaxe # Goob
     - Pen
   - type: MeleeWeapon
     wideAnimationRotation: -45
