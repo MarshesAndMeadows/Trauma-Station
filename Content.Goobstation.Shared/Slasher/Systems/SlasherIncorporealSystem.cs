@@ -4,15 +4,15 @@ using Content.Goobstation.Shared.Slasher.Events;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Actions.Events;
+using Content.Shared.Chat;
 using Content.Shared.Interaction.Events;
-using Content.Shared.InteractionVerbs.Events;
 using Content.Shared.Popups;
 using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
 using Content.Shared.Movement.Pulling.Events;
 using Robust.Shared.Network;
-using Content.Shared.Damage;
 using Content.Shared.Damage.Events;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Tag;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Hands;
@@ -59,7 +59,6 @@ public sealed class SlasherIncorporealSystem : EntitySystem
         SubscribeLocalEvent<SlasherIncorporealComponent, SlasherIncorporealObserverCheckEvent>(OnObserverCheck);
 
         SubscribeLocalEvent<SlasherIncorporealComponent, InteractionAttemptEvent>(OnAttemptInteract);
-        SubscribeLocalEvent<SlasherIncorporealComponent, InteractionVerbAttemptEvent>(OnAttempt);
         SubscribeLocalEvent<SlasherIncorporealComponent, AttackAttemptEvent>(OnAttackAttempt);
         SubscribeLocalEvent<SlasherIncorporealComponent, UseAttemptEvent>(OnUseAttempt);
         SubscribeLocalEvent<SlasherIncorporealComponent, PullAttemptEvent>(OnPullAttempt);
@@ -148,6 +147,16 @@ public sealed class SlasherIncorporealSystem : EntitySystem
 
         if (!ent.Comp.IsIncorporeal)
             return;
+
+        // Check if any active surveillance cameras have line of sight.
+        var camEv = new SlasherIncorporealCameraCheckEvent(GetNetEntity(ent.Owner), ent.Comp.ObserverCheckRange);
+        RaiseLocalEvent(ref camEv);
+        if (camEv.Cancelled)
+        {
+            _popup.PopupEntity(Loc.GetString("slasher-corporealize-fail-camera"), ent.Owner, ent.Owner);
+            return;
+        }
+
         ExitIncorporeal(ent.Owner, ent);
         args.Handled = true;
     }
