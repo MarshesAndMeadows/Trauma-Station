@@ -65,7 +65,7 @@
         - !type:ReagentCondition
           reagent: MinersSalve
           min: 21
-        - !type:PressureThreshold
+        - !type:PressureCondition
           min: 1
           max: 50
           worksOnLavaland: true

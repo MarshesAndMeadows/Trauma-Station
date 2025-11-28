@@ -29,7 +29,12 @@
   - type: TargetObjective
     title: objective-condition-teach-lesson-title
   - type: PickRandomPerson
-
+    filters:
+    # Can't have multiple objectives to kill the same person.
+    - !type:TargetObjectiveMindFilter
+      blacklist:
+        components:
+        - KillPersonCondition
 
 - type: entity
   parent: [BaseTraitorObjective, BaseTeachALessonObjective]
@@ -43,4 +48,19 @@
     unique: true
   - type: TargetObjective
     title: objective-condition-teach-lesson-title
-  - type: PickRandomHead
+  - type: PickRandomPerson
+    filters:
+    - !type:BodyMindFilter
+      whitelist:
+        components:
+        - CommandStaff
+    - !type:BodyMindFilter # Trauma - don't pick nukie commander...
+      inverted: true
+      whitelist:
+        components:
+        - NukeOperative
+    # Can't have multiple objectives to kill the same person.
+    - !type:TargetObjectiveMindFilter
+      blacklist:
+        components:
+        - KillPersonCondition

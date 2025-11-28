@@ -32,7 +32,6 @@
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
     - id: LoneOpsSpawnHermit
-    #- id: UnknownShuttleManOWar # Goob - Nuke the man-o-war
     - id: UnknownShuttleInstigatorHermit
 
 # Shuttle Game Rules
@@ -48,13 +47,13 @@
     chaosScore: -90 #increased by 50
 
 - type: entity
-  parent: UnknownShuttleCargoLost
+  parent: UnknownShuttleRuleHermit
   id: UnknownShuttleCargoLostHermit
   components:
   - type: StationEvent
-    maxOccurrences: 2 # should be the same as [copies] in shuttle_incoming_event.yml
+    maxOccurrences: 2
   - type: LoadMapRule
-    preloadedGrid: ShuttleCargoLost
+    gridPath: /Maps/Shuttles/ShuttleEvent/lost_cargo.yml
 
 - type: entity
   parent: UnknownShuttleRuleHermit
@@ -62,9 +61,9 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming
-    maxOccurrences: 2 # should be the same as [copies] in shuttle_incoming_event.yml
+    maxOccurrences: 2
   - type: LoadMapRule
-    preloadedGrid: TravelingCuisine
+    gridPath: /Maps/Shuttles/ShuttleEvent/traveling_china_cuisine.yml
 
 - type: entity
   parent: UnknownShuttleRuleHermit
@@ -74,7 +73,7 @@
     startAnnouncement: station-event-unknown-shuttle-incoming
     maxOccurrences: 3 # should be the same as [copies] in shuttle_incoming_event.yml
   - type: LoadMapRule
-    preloadedGrid: DisasterEvacPod
+    gridPath: /Maps/Shuttles/ShuttleEvent/disaster_evacpod.yml
 
 # The power of 3 clowns proved too strong for the players and may need to be 1984'ed. Replace this with a more engaging clown shuttle.
 - type: entity
@@ -116,7 +115,7 @@
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
     weight: 1.5 # decreased by 1.5
   - type: LoadMapRule
-    preloadedGrid: Gym
+    gridPath: /Maps/Shuttles/ShuttleEvent/gym.yml
 
 - type: entity
   id: UnknownShuttleNTIncorporationHermit
@@ -136,23 +135,6 @@
   - type: GameRule
     chaosScore: 1000 #increased by 100
 
-# Goob - Nuke the man-o-war
-#- type: entity
-#  id: UnknownShuttleManOWar
-#  parent: BaseUnknownShuttleRule
-#  components:
-#  - type: StationEvent
-#    startAnnouncement: station-event-unknown-shuttle-incoming #Leaving this one because theyre like primitives and its funnier
-#    weight: 1 # lower because antags
-#    earliestStart: 50 # late to hopefully have enough ghosts to fill all roles quickly. (4) & antags
-#    chaos: # Goobstation
-#      # it's 4 free agent barely-equipped dudes
-#      Hostile: 60
-#      Medical: 20
-#      Death: 20
-#  - type: LoadMapRule
-#    preloadedGrid: ManOWar
-
 - type: entity
   id: UnknownShuttleMicroshuttleHermit
   parent: BaseUnknownShuttleRule
@@ -162,7 +144,7 @@
     weight: 2 # decreased by 2
     maxOccurrences: 2 # decreased by 2
   - type: LoadMapRule
-    preloadedGrid: Microshuttle
+    gridPath: /Maps/Shuttles/ShuttleEvent/microshuttle.yml
 
 - type: entity
   id: UnknownShuttleAlienTouristHermit

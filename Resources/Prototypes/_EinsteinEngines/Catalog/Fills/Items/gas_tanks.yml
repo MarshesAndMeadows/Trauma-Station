@@ -12,7 +12,6 @@
     sprite: _EinsteinEngines/Objects/Tanks/emergency.rsi
   - type: Tag
     tags:
-    - GasTank
     - EmergencyOxygenTank
 
 - type: entity
@@ -43,7 +42,6 @@
     sprite: _EinsteinEngines/Objects/Tanks/regular.rsi
   - type: Tag
     tags:
-    - GasTank
     - EmergencyOxygenTank
 
 - type: entity
@@ -74,7 +72,6 @@
     sprite: _EinsteinEngines/Objects/Tanks/double-emergency.rsi
   - type: Tag
     tags:
-    - GasTank
     - EmergencyOxygenTank
 
 - type: entity
