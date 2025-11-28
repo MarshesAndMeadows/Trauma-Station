@@ -89,7 +89,7 @@ namespace Content.Server.Abilities.Oni
 
         private void OnStamHit(EntityUid uid, OniComponent component, ref ModifyOutgoingStaminaDamageEvent args)
         {
-            args.Multiplier *= component.StamDamageMultiplier;
+            args.Value *= component.StamDamageMultiplier;
         }
     }
 }

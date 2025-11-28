@@ -52,7 +52,7 @@ public sealed class EatToGrowSystem : EntitySystem
             return;
 
         // shrink the entity
-        ChangeFixtures(ent.Comp.TimesGrown * -ent.Comp.Growth / 4);
+        ChangeFixtures(ent, ent.Comp.TimesGrown * -ent.Comp.Growth / 4);
         ChangeScale(ent, 1f - ent.Comp.CurrentScale);
         ent.Comp.CurrentScale = 1f;
         ent.Comp.TimesGrown = 0;

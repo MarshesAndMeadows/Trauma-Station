@@ -1,21 +1,21 @@
 using Content.Goobstation.Maths.FixedPoint;
 using Content.Goobstation.Shared.Slasher.Components;
 using Content.Goobstation.Shared.Slasher.Events;
-using Content.Server.Cuffs;
+using Content.Shared.Cuffs;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Cuffs.Components;
-using Content.Server.Actions;
-using Content.Server.Administration.Systems;
+using Content.Shared.Actions;
+using Content.Shared.Administration.Systems;
 
 namespace Content.Goobstation.Server.Slasher.Systems;
 
 public sealed class SlasherRegenerateSystem : EntitySystem
 {
     [Dependency] private readonly SharedSolutionContainerSystem _solutions = default!;
-    [Dependency] private readonly CuffableSystem _cuffs = default!;
-    [Dependency] private readonly ActionsSystem _actions = default!;
+    [Dependency] private readonly SharedCuffableSystem _cuffs = default!;
+    [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly RejuvenateSystem _rejuvenate = default!;
 
     public override void Initialize()
@@ -55,8 +55,8 @@ public sealed class SlasherRegenerateSystem : EntitySystem
         // If our entity is cuffed/in-cuffs --> uncuff them
         if (TryComp<CuffableComponent>(uid, out var cuffs) && cuffs.Container.ContainedEntities.Count > 0)
         {
-            var cuff = cuffs.LastAddedCuffs;
-            _cuffs.Uncuff(uid, cuffs.LastAddedCuffs, cuff);
+            var cuff = cuffs.Container.ContainedEntities[cuffs.Container.ContainedEntities.Count - 1];
+            _cuffs.Uncuff(uid, uid, cuff, cuffs);
             QueueDel(cuff);
         }
 

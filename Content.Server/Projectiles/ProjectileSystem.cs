@@ -69,10 +69,9 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         if (TryComp(uid, out ProjectileMissTargetPartChanceComponent? missComp) &&
             !missComp.PerfectHitEntities.Contains(target))
             targetPart = TargetBodyPart.Chest;
-        var modifiedDamage = _damageableSystem.TryChangeDamage(target,
+        var modifiedDamage = _damageableSystem.ChangeDamage((target, damageableComponent),
             ev.Damage,
             component.IgnoreResistances,
-            damageable: damageableComponent,
             origin: component.Shooter,
             targetPart: targetPart);
         // </Goob>

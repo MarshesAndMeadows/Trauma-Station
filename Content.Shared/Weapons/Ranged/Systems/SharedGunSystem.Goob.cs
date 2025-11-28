@@ -35,7 +35,7 @@ public abstract partial class SharedGunSystem
         return random.Prob(missChance) ? TargetBodyPart.Chest : ent.Comp.Target;
     }
 
-    private void SetProjectilePerfectHitEntities(EntityUid projectile,
+    public void SetProjectilePerfectHitEntities(EntityUid projectile,
         Entity<TargetingComponent?>? shooter,
         MapCoordinates coords)
     {

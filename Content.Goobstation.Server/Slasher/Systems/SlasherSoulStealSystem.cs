@@ -4,6 +4,7 @@ using Content.Goobstation.Shared.Slasher.Events;
 using Content.Goobstation.Shared.Slasher.Objectives;
 using Content.Shared.Actions;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;

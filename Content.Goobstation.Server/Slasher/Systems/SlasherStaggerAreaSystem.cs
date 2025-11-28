@@ -1,11 +1,13 @@
 using Content.Goobstation.Shared.Slasher.Components;
 using Content.Goobstation.Shared.Slasher.Events;
+using Content.Shared.Body.Components;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
 using Robust.Shared.Audio.Systems;
-using Content.Shared.StatusEffect;
+using Content.Shared.StatusEffectNew;
 using Content.Shared.Interaction;
 using Content.Server.Actions;
+using Robust.Shared.Prototypes;
 
 namespace Content.Goobstation.Server.Slasher.Systems;
 
@@ -15,11 +17,13 @@ namespace Content.Goobstation.Server.Slasher.Systems;
 public sealed class SlasherStaggerAreaSystem : EntitySystem
 {
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedStunSystem _stun = default!;
+    [Dependency] private readonly StatusEffectsSystem _status = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedInteractionSystem _interact = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
+
+    private static readonly EntProtoId StaggerEffect = "SlasherStaggerStatusEffect";
 
     public override void Initialize()
     {
@@ -47,7 +51,7 @@ public sealed class SlasherStaggerAreaSystem : EntitySystem
 
         var (uid, comp) = ent;
 
-        foreach (var (targetUid, _) in _lookup.GetEntitiesInRange<StatusEffectsComponent>(Transform(uid).Coordinates, comp.Range, LookupFlags.Dynamic))
+        foreach (var (targetUid, _) in _lookup.GetEntitiesInRange<BodyComponent>(Transform(uid).Coordinates, comp.Range, LookupFlags.Dynamic))
         {
             if (targetUid == uid)
                 continue;
@@ -55,7 +59,7 @@ public sealed class SlasherStaggerAreaSystem : EntitySystem
             if (!_interact.InRangeUnobstructed(uid, targetUid, comp.Range))
                 continue;
 
-            _stun.TrySlowdown(targetUid, TimeSpan.FromSeconds(comp.SlowDuration), true, comp.SlowMultiplier, comp.SlowMultiplier);
+            _status.TryUpdateStatusEffectDuration(targetUid, StaggerEffect, comp.SlowDuration);
 
             // popup for affected entity
             _popup.PopupEntity(Loc.GetString("slasher-staggerarea-victim"), targetUid, targetUid, PopupType.MediumCaution);

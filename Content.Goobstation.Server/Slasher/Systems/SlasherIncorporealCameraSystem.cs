@@ -1,7 +1,7 @@
 using Content.Goobstation.Shared.Slasher.Events;
-using Content.Server.SurveillanceCamera;
 using Content.Shared.Interaction;
 using Content.Shared.Physics;
+using Content.Shared.SurveillanceCamera.Components;
 
 namespace Content.Goobstation.Server.Slasher.Systems;
 

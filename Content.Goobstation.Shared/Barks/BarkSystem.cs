@@ -1,25 +1,29 @@
-using Content.Server.Chat.Systems;
 using Content.Goobstation.Common.Barks;
-using Robust.Shared.Configuration;
 using Content.Goobstation.Common.CCVar;
+using Content.Shared.Chat;
+using Robust.Shared.Configuration;
 
-namespace Content.Goobstation.Server.Barks;
+namespace Content.Goobstation.Shared.Barks;
 
 public sealed class BarkSystem : EntitySystem
 {
-    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+
+    private bool _enabled;
 
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<SpeechSynthesisComponent, EntitySpokeEvent>(OnEntitySpoke);
+        Subs.CVar(_cfg, GoobCVars.BarksEnabled, x => _enabled = x, true);
     }
 
     private void OnEntitySpoke(EntityUid uid, SpeechSynthesisComponent comp, EntitySpokeEvent args)
     {
         if (comp.VoicePrototypeId is null
             || !args.Language.SpeechOverride.RequireSpeech
-            || !_configurationManager.GetCVar(GoobCVars.BarksEnabled))
+            || !_enabled)
             return;
 
         var sourceEntity = GetNetEntity(uid);
