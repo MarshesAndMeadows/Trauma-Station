@@ -784,3 +784,9 @@ Entries:
       message: BigBoxCQC 100TC crate.
   id: 85
   time: '2025-11-30T06:11:04.0000000+00:00'
+- author: Aviu
+  changes:
+    - type: Add
+      message: Flesh heretic path rework.
+  id: 86
+  time: '2025-11-30T20:04:05.0000000+00:00'
