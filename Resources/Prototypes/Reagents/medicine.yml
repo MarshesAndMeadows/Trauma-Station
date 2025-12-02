@@ -1830,6 +1830,10 @@
         effectProto: StatusEffectDrowsiness
         time: 4
         type: Add
+        conditions: # Goob
+        - !type:ReagentCondition
+          reagent: Haloperidol
+          min: 5
       - !type:GenericStatusEffect
         key: Jitter
         time: 4.0
